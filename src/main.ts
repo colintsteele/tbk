@@ -1,10 +1,16 @@
 import App from './App.svelte';
-import Key from './key.ts';
+import Key from './key';
+
+let aKey = new Key('C3');
+
+let keys = [];
+keys.push(aKey);
 
 const app = new App({
 	target: document.body,
 	props: {
-		name: 'world'
+		name: 'world',
+		keys: keys
 	}
 });
 
