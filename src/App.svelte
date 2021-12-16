@@ -1,9 +1,6 @@
 <script lang="ts">
 import type KeyHandler from "./keyHandler";
-
-	export let keys: object;
 	export let keyHandler: KeyHandler;
-
 	let keyPressed = null;
 	$: lastKey = keyPressed;
 
@@ -18,16 +15,14 @@ import type KeyHandler from "./keyHandler";
 <!-- a: 97 s:115 d:100 -->
 
 <main>
-	<p> hello world! </p>
+	<p> 🎶🎶🎶 </p>
 	<h4>Key Pressed: <span>{lastKey}</span> </h4>
 
-	<button on:click={keys['C3'].play()}>
-		<!-- TODO: learn to toggle button -->
+	<button on:click={() => keyHandler.handle('a')}>
 		C
 	</button>
 
-	<button on:click={keys['G3'].play()}>
-		<!-- TODO: learn to toggle button -->
+	<button on:click={() => keyHandler.handle('s')}>
 		G
 	</button>
 
