@@ -1,49 +1,29 @@
 import { getContext } from "svelte";
+import { FrequencyMap } from "./frequencyMap";
 export default class Key {
     private context = new AudioContext;
-
-    private keyMap = {
-        "C3" : 130.8,
-        "G3" : 196.0
-    };
-
     public note: string;
-    constructor(note: string) {
+    public octave: number;
+
+    constructor(note: string, octave: number) {
         this.note = note;
+        this.octave = octave;
     }
 
     play() {
-        console.log(this.note);
         var osci = this.context.createOscillator();
         var gain = this.context.createGain();
-        osci.frequency.value = this.keyMap[this.note]
+
+        osci.frequency.value = FrequencyMap[this.note][this.octave]
         osci.connect(gain);
         osci.type = "sine"
+
         gain.connect(this.context.destination);
 
         osci.start(0);
         gain.gain.exponentialRampToValueAtTime(
             0.00001, this.context.currentTime + 1
         )
-        // if(this.started == true) {
-        //     this.gain.gain.exponentialRampToValueAtTime(
-        //         0.00001, this.context.currentTime + 0.04
-        //     )
-        //     this.stopped = true;
-        //     this.started = false;
-        // } else if(this.stopped == true) {
-        //     this.gain.gain.exponentialRampToValueAtTime(
-        //         1, this.context.currentTime + 0.04
-        //     );
-        //     this.stopped = false;
-        //     this.started = true;
-        // } else {
-        //     this.osci.start(1);
-        //     this.started = true;
-        // }
-    }
-
-    stop(){
     }
 }
 

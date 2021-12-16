@@ -6,8 +6,16 @@ export default class KeyHandler {
     constructor(){
         this.keys = {};
 
-        this.keys['a'] = new Key('C3'),
-        this.keys['s'] = new Key('G3')
+        //not flats
+        this.keys['a'] = new Key('F', 3),
+        this.keys['s'] = new Key('G', 3)
+        this.keys['d'] = new Key('A', 3),
+        this.keys['f'] = new Key('B', 3),
+
+        //flats
+        this.keys['w'] = new Key('F#', 3),
+        this.keys['e'] = new Key('G#', 3),
+        this.keys['r'] = new Key('Bb', 3)
     }
 
     handle(keypress: string) {
