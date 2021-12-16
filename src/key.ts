@@ -1,19 +1,19 @@
 import { getContext } from "svelte";
-
 export default class Key {
     private context = new AudioContext;
-    private started = false;
-    private stopped = false;
 
     private keyMap = {
-        "C3" : 130.8
+        "C3" : 130.8,
+        "G3" : 196.0
     };
+
     public note: string;
     constructor(note: string) {
         this.note = note;
     }
 
     play() {
+        console.log(this.note);
         var osci = this.context.createOscillator();
         var gain = this.context.createGain();
         osci.frequency.value = this.keyMap[this.note]
