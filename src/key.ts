@@ -2,12 +2,14 @@ import { getContext } from "svelte";
 import { FrequencyMap } from "./frequencyMap";
 export default class Key {
     private context = new AudioContext;
+    public key: string; //keyboard key -> qwerty
     public note: string;
     public octave: number;
 
-    constructor(note: string, octave: number) {
+    constructor(note: string, octave: number, key: string) {
         this.note = note;
         this.octave = octave;
+        this.key = key;
     }
 
     play() {

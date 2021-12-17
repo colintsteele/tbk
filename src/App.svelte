@@ -1,8 +1,10 @@
 <script lang="ts">
 import Natural from "./components/Natural.svelte";
+import type Key from "./key";
 import type KeyHandler from "./keyHandler";
 
 	export let keyHandler: KeyHandler;
+	export let keys: Array<Key>;
 
 	let keyPressed = null;
 	$: lastKey = keyPressed;
@@ -33,8 +35,8 @@ import type KeyHandler from "./keyHandler";
 
 	<h6> ☣️ </h6>
 	
-	{#each notes as note}
-	  <Natural note={note}/>
+	{#each Object.entries(keys).slice(0, 7) as key }
+	  <Natural key={key[1]}/>
 	{/each}
 
 </main>
@@ -60,8 +62,6 @@ import type KeyHandler from "./keyHandler";
 		font-size: 1em;
 		font-weight: 100;
 	}
-
-	
 
 	@media (min-width: 640px) {
 		main {

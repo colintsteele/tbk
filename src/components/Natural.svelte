@@ -1,10 +1,21 @@
 <script lang="ts">
-    export let note;
+import type Key from "../key";
+
+    export let key: Key;
 </script>
 
-<div class='natural'> {note} </div>
+<div class='natural' on:click={key.play}>
+    <span>{key.note} </span>     
+    <span>{key.octave} </span>
+    <span>{key.key} </span>
+</div>
 
 <style>
+    span {
+        display: block;
+        font-size: small;
+    }
+
     .natural {
         height: 3em;
         width: 2em;

@@ -1,12 +1,38 @@
 import App from './App.svelte';
+import Key from './key';
 import KeyHandler from './keyHandler';
 
-let keyHandler = new KeyHandler;
+let keyMap: {} = {
+	'C': ['q', '1'],
+	'C#': ['w', '2'],
+	'D': ['e', '3'],
+	'Eb': ['r', '4'],
+	'E': ['t', '5'],
+	'F': ['y', '6'],
+	'F#': ['u', '7'],
+	'G': ['i', '8'],
+	'G#': ['o', '9'],
+	'A': ['p', '0'],
+	'Bb': ['[', '-'],
+	'B': [']', '=']
+}
+let keys: {} = {};
+for (var key in keyMap) {
+	var num_row = keyMap[key][1]
+	var letter_row = keyMap[key][0];
+
+	keys[num_row] = new Key(key, 3, num_row);
+	keys[letter_row] = new Key(key, 4, letter_row);
+}
+
+let keyHandler = new KeyHandler(keys);
+console.log(keys);
 
 const app = new App({
 	target: document.body,
 	props: {
-		keyHandler: keyHandler
+		keyHandler: keyHandler,
+		keys: keys
 	}
 });
 
