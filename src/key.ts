@@ -1,32 +1,21 @@
-import { getContext } from "svelte";
 import { FrequencyMap } from "./frequencyMap";
+import type SoundMachine from "./soundMachine";
 export default class Key {
-    private context = new AudioContext;
-    public key: string; //keyboard key -> qwerty
-    public note: string;
-    public octave: number;
+    private soundMachine: SoundMachine
+    public key: string //keyboard key -> qwerty
+    public note: string
+    public octave: number
 
-    constructor(note: string, octave: number, key: string) {
+    constructor(soundMachine: SoundMachine, note: string, octave: number, key: string) {
+        this.soundMachine = soundMachine;
         this.note = note;
         this.octave = octave;
         this.key = key;
     }
 
     play() {
-        var osci = this.context.createOscillator();
-        var gain = this.context.createGain();
-
-        osci.frequency.value = FrequencyMap[this.note][this.octave]
-        osci.connect(gain);
-        osci.type = "sine"
-
-        gain.connect(this.context.destination);
-
-        osci.start(0);
-        gain.gain.exponentialRampToValueAtTime(
-            0.00001, this.context.currentTime + 1
-        )
-        console.log(this.note);
+        this.soundMachine.setFrequency(FrequencyMap[this.note][this.octave]);
+        this.soundMachine.start(0)
         return this.note;
     }
 }

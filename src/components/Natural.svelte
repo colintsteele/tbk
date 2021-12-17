@@ -1,13 +1,16 @@
 <script lang="ts">
 import type Key from "../key";
-
     export let key: Key;
+
+    const onClick = () => {
+        key.play()
+    }
 </script>
 
-<div class='natural' on:click={key.play}>
-    <span>{key.note} </span>     
-    <span>{key.octave} </span>
-    <span>{key.key} </span>
+<div class='natural' on:click={onClick}>
+    <span> {key.note} </span>     
+    <span> {key.octave} </span>
+    <span> {key.key} </span>
 </div>
 
 <style>

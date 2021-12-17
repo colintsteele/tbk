@@ -4,7 +4,7 @@ import type Key from "./key";
 import type KeyHandler from "./keyHandler";
 
 	export let keyHandler: KeyHandler;
-	export let keys: Array<Key>;
+	export let keys: any;
 
 	let keyPressed = null;
 	$: lastKey = keyPressed;
@@ -20,8 +20,6 @@ import type KeyHandler from "./keyHandler";
 		}
 	}
 
-	let notes = ['C#','D', 'Eb', 'Bb'];
-
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -35,9 +33,9 @@ import type KeyHandler from "./keyHandler";
 
 	<h6> ☣️ </h6>
 	
-	{#each Object.entries(keys).slice(0, 7) as key }
-	  <Natural key={key[1]}/>
-	{/each}
+	<!-- {#each Object.entries(keys).slice(0, 7) as key } -->
+	  <Natural key={keys[1]}/>
+	<!-- {/each} -->
 
 </main>
 

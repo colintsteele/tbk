@@ -1,8 +1,10 @@
 import App from './App.svelte';
 import Key from './key';
 import KeyHandler from './keyHandler';
-
-let keyMap: {} = {
+import SoundMachine from './soundMachine';
+let context = new AudioContext;
+let soundMachine = new SoundMachine(context)
+let keyMap = {
 	'C': ['q', '1'],
 	'C#': ['w', '2'],
 	'D': ['e', '3'],
@@ -16,17 +18,15 @@ let keyMap: {} = {
 	'Bb': ['[', '-'],
 	'B': [']', '=']
 }
-let keys: {} = {};
+let keys = {};
 for (var key in keyMap) {
 	var num_row = keyMap[key][1]
 	var letter_row = keyMap[key][0];
 
-	keys[num_row] = new Key(key, 3, num_row);
-	keys[letter_row] = new Key(key, 4, letter_row);
+	keys[num_row] = new Key(soundMachine, key, 3, num_row);
+	keys[letter_row] = new Key(soundMachine, key, 4, letter_row);
 }
-
 let keyHandler = new KeyHandler(keys);
-console.log(keys);
 
 const app = new App({
 	target: document.body,
