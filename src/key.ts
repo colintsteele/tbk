@@ -24,6 +24,8 @@ export default class Key {
         gain.gain.exponentialRampToValueAtTime(
             0.00001, this.context.currentTime + 1
         )
+        console.log(this.note);
+        return this.note;
     }
 }
 

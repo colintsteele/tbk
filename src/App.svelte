@@ -1,12 +1,23 @@
 <script lang="ts">
+import Key from "./key";
+import KeyComponent from ".components/Key.svelte";
 import type KeyHandler from "./keyHandler";
+
 	export let keyHandler: KeyHandler;
+	export let pianoKeys: KeyComponent[];
+
 	let keyPressed = null;
 	$: lastKey = keyPressed;
 
+	let notePlayed = null;
+	$: lastNote = notePlayed;
+
 	function handleKeydown(e: KeyboardEvent) {
-		keyPressed = e.key;
-		keyHandler.handle(e.key);
+		var played = keyHandler.handle(e.key);
+		if(played != undefined) {
+			keyPressed = played['key']
+			notePlayed = played['note']
+		}
 	}
 
 </script>
@@ -16,15 +27,14 @@ import type KeyHandler from "./keyHandler";
 
 <main>
 	<p> 🎶🎶🎶 </p>
+	<h4> Press keys 1 through = and q through ] to play music </h4>
 	<h4>Key Pressed: <span>{lastKey}</span> </h4>
+	<h4>Not Produced: <span>{lastNote}</span> </h4>
 
-	<button on:click={() => keyHandler.handle('a')}>
-		C
-	</button>
-
-	<button on:click={() => keyHandler.handle('s')}>
+	<!-- <button on:click={() => keyHandler.handle('s')}>
 		G
-	</button>
+	</button> -->
+	<KeyComponent/>
 
 </main>
 
@@ -40,14 +50,12 @@ import type KeyHandler from "./keyHandler";
 
 	h4 {
 		color: #ff3e00;
-		text-transform: uppercase;
 		font-size: 2em;
 		font-weight: 100;
 	}
 
 	span {
 		color: #0077ff;
-		text-transform: uppercase;
 		font-size: 1em;
 		font-weight: 100;
 	}

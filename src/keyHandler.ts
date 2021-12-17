@@ -1,27 +1,45 @@
 import { getContext } from "svelte";
+import { FrequencyMap } from "./frequencyMap";
 import Key from "./key";
 //probably becomes more important as we switch keypresses around with music notes
 export default class KeyHandler {
     private keys: object;
+
     constructor(){
         this.keys = {};
 
-        //not flats
-        this.keys['a'] = new Key('F', 3),
-        this.keys['s'] = new Key('G', 3)
-        this.keys['d'] = new Key('A', 3),
-        this.keys['f'] = new Key('B', 3),
+        let mapping = {
+             'C'  : ['q', '1'],
+             'C#' : ['w', '2'],
+             'D'  : ['e', '3'],
+             'Eb' : ['r', '4'],
+             'E'  : ['t', '5'],
+             'F'  : ['y', '6'],
+             'F#' : ['u', '7'],
+             'G'  : ['i', '8'],
+             'G#' : ['o', '9'],
+             'A'  : ['p', '0'],
+             'Bb' : ['[', '-'],
+             'B'  : [']', '=']
+        }
 
-        //flats
-        this.keys['w'] = new Key('F#', 3),
-        this.keys['e'] = new Key('G#', 3),
-        this.keys['r'] = new Key('Bb', 3)
+        for (var note in mapping) {
+            var num_row = mapping[note][1]
+            var letter_row = mapping[note][0];
+            this.keys[num_row] = new Key(note, 3);
+            this.keys[letter_row] = new Key(note, 4);
+        }
     }
 
     handle(keypress: string) {
         let key = this.keys[keypress]
         if (key !== undefined) {
-            key.play();
+            var note = key.play();
+
+            return {
+               'key': keypress,
+               'note': note
+             }
         }
     }
 }
