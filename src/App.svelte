@@ -1,10 +1,8 @@
 <script lang="ts">
-import Key from "./key";
-import KeyComponent from ".components/Key.svelte";
+import Natural from "./components/Natural.svelte";
 import type KeyHandler from "./keyHandler";
 
 	export let keyHandler: KeyHandler;
-	export let pianoKeys: KeyComponent[];
 
 	let keyPressed = null;
 	$: lastKey = keyPressed;
@@ -30,11 +28,12 @@ import type KeyHandler from "./keyHandler";
 	<h4> Press keys 1 through = and q through ] to play music </h4>
 	<h4>Key Pressed: <span>{lastKey}</span> </h4>
 	<h4>Not Produced: <span>{lastNote}</span> </h4>
+	
+	<Natural/>
 
 	<!-- <button on:click={() => keyHandler.handle('s')}>
 		G
 	</button> -->
-	<KeyComponent/>
 
 </main>
 
