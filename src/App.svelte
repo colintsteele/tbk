@@ -18,6 +18,8 @@ import type KeyHandler from "./keyHandler";
 		}
 	}
 
+	let notes = ['C#','D', 'Eb', 'Bb'];
+
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -28,12 +30,12 @@ import type KeyHandler from "./keyHandler";
 	<h4> Press keys 1 through = and q through ] to play music </h4>
 	<h4>Key Pressed: <span>{lastKey}</span> </h4>
 	<h4>Not Produced: <span>{lastNote}</span> </h4>
-	
-	<Natural/>
 
-	<!-- <button on:click={() => keyHandler.handle('s')}>
-		G
-	</button> -->
+	<h6> ☣️ </h6>
+	
+	{#each notes as note}
+	  <Natural note={note}/>
+	{/each}
 
 </main>
 
