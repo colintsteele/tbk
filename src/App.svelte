@@ -1,25 +1,27 @@
 <script lang="ts">
-import Natural from "./components/Natural.svelte";
-import type Key from "./key";
-import type KeyHandler from "./keyHandler";
+import Natural from "./components/Natural.svelte"
+import type Key from "./key"
+import type KeyHandler from "./keyHandler"
 
-	export let keyHandler: KeyHandler;
-	export let keys: any;
+	export let keyHandler: KeyHandler
+	export let keys: Array<Key>
 
-	let keyPressed = null;
-	$: lastKey = keyPressed;
+	let keyPressed = null
+	$: lastKey = keyPressed
 
-	let notePlayed = null;
-	$: lastNote = notePlayed;
+	let notePlayed = null
+	$: lastNote = notePlayed
 
 	function handleKeydown(e: KeyboardEvent) {
-		var played = keyHandler.handle(e.key);
-		if(played != undefined) {
-			keyPressed = played['key']
-			notePlayed = played['note']
-		}
-	}
+		keyPressed
 
+		keys.map((key) => {
+			console.log('m')
+			if(key[0] === e.key){
+				key[1].play()
+			}
+		})
+	}
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -33,9 +35,9 @@ import type KeyHandler from "./keyHandler";
 
 	<h6> ☣️ </h6>
 	
-	<!-- {#each Object.entries(keys).slice(0, 7) as key } -->
-	  <Natural key={keys[1]}/>
-	<!-- {/each} -->
+	{#each keys as key }
+	  <Natural key={ key[1] }/>
+	{/each}
 
 </main>
 

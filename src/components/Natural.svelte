@@ -1,13 +1,26 @@
-<script lang="ts">
-import type Key from "../key";
-    export let key: Key;
+<script module="module" lang="ts">
+import type Key from "../key"
+    let keyDown = false
+
+    export let key: Key
+    export function pressKey(kkey) {
+        if(kkey == 'click' || kkey.key == key.key){
+            key.play() 
+            keyDown = true
+            setTimeout(keyUp, 100)
+        }
+    }
 
     const onClick = () => {
-        key.play()
+        pressKey('click')
+    }
+
+    const keyUp = () => {
+        keyDown = false
     }
 </script>
 
-<div class='natural' on:click={onClick}>
+<div class='natural' class:pressed="{keyDown === true}" on:click={onClick}>
     <span> {key.note} </span>     
     <span> {key.octave} </span>
     <span> {key.key} </span>

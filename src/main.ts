@@ -18,21 +18,22 @@ let keyMap = {
 	'Bb': ['[', '-'],
 	'B': [']', '=']
 }
-let keys = {};
+let keys: Array<Key> = [];
+
 for (var key in keyMap) {
 	var num_row = keyMap[key][1]
 	var letter_row = keyMap[key][0];
 
-	keys[num_row] = new Key(soundMachine, key, 3, num_row);
-	keys[letter_row] = new Key(soundMachine, key, 4, letter_row);
+	keys.push(new Key(soundMachine, key, 3, num_row))
 }
+
 let keyHandler = new KeyHandler(keys);
 
 const app = new App({
 	target: document.body,
 	props: {
 		keyHandler: keyHandler,
-		keys: keys
+		keys: Object.entries(keys).slice(0, 7)
 	}
 });
 
