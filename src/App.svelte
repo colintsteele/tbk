@@ -1,19 +1,19 @@
 <script lang="ts">
 import Natural from "./components/Natural.svelte"
+import Note from "./components/Note.svelte"
 import type Key from "./key"
 import type KeyHandler from "./keyHandler"
+import { currentNote, assigningNote } from "./stores";
 
 	export let keyHandler: KeyHandler
 	export let keys: Array<Key>
-
-	let naturals = [];
+	let notes = keys.map( key => key[1].note )
+	let noteComponents = {};	
+	let nNaturals = {};
 
 	function handleKeydown(e: KeyboardEvent) {
-		naturals.map((natural) => {
-			if(natural.key.key === e.key){
-				natural.pressKey()
-			}
-		})
+		let key = nNaturals[e.key]
+		key && key.pressKey()
 	}
 </script>
 
@@ -22,9 +22,19 @@ import type KeyHandler from "./keyHandler"
 
 <main>
 	<p> 🎶🎶🎶 </p>
-	{#each keys as key, i }
-	  <Natural key={ key[1] } bind:this={naturals[i]}/>
-	{/each}
+	<div id="piano">
+		{#each keys as key }
+			<Natural key={ key[1] } bind:this={nNaturals[key[1].key]}/>
+		{/each}
+	</div>
+
+	<div id="noteSelector">
+		{#each notes as note }
+			<Note note={ note } bind:this={noteComponents[note]}/>
+		{/each}
+	</div>
+	
+
 </main>
 
 <style>
@@ -37,6 +47,9 @@ import type KeyHandler from "./keyHandler"
 		margin: 0 auto;
 	}
 
+	#noteSelector {
+		margin-top: 2em;
+	}
 	h4 {
 		color: #ff3e00;
 		font-size: 2em;

@@ -33,7 +33,7 @@ const app = new App({
 	target: document.body,
 	props: {
 		keyHandler: keyHandler,
-		keys: Object.entries(keys).slice(0, 7)
+		keys: Object.entries(keys).slice(0, 12)
 	}
 });
 

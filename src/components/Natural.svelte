@@ -1,14 +1,26 @@
 <svelte:options accessors={true}/>
 
 <script module="module" lang="ts">
+import { get } from "svelte/store";
+
 import type Key from "../key"
-    let keyDown = false
+import { currentNote, assigningNote } from "../stores";
+
+    let keyDown: boolean = false
+    let assignedKey: string = null;
 
     export let key: Key
+    
     export function pressKey() {
-        key.play() 
-        keyDown = true
-        setTimeout(keyUp, 100)
+        let shouldAssign = get(assigningNote);
+        if (shouldAssign == true) {
+            key.note = assignedKey; 
+            assigningNote.set(false)
+        } else {
+            key.play() 
+            keyDown = true
+            setTimeout(keyUp, 100)
+        }
     }
 
     const onClick = () => {
@@ -18,11 +30,15 @@ import type Key from "../key"
     const keyUp = () => {
         keyDown = false
     }
+
+    currentNote.subscribe(value => {
+        assignedKey = value
+    })
 </script>
 
 <div class='natural' class:pressed="{keyDown === true}" on:click={onClick}>
     <span> {key.note} </span>     
-    <span> {key.octave} </span>
+    <!-- <span> {key.octave} </span> -->
     <span> {key.key} </span>
 </div>
 
