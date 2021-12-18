@@ -1,32 +1,36 @@
+<svelte:options accessors={true} />
 
-<svelte:options accessors={true}/>
+<script module="module" lang="ts">
+  import { assigningNote, currentNote } from "../stores";
 
-<script module="module" lang='ts'>
-import { assigningNote, currentNote } from "../stores";
+  export let note: string;
 
-    export let note: string
+  const onClick = () => {
+    currentNote.set(note);
+    assigningNote.set(true);
+  };
 
-    const onClick = () => {
-        currentNote.set(note)
-        assigningNote.set(true)
-    }
-
-    const stopAssignment = () => {
-        assigningNote.set(false)
-    }
+  const stopAssignment = () => {
+    assigningNote.set(false);
+  };
 </script>
 
-<div class='noteblock' on:click={onClick} on:mouseover={onClick} on:mouseout{stopAssignment}>
-    <span> {note} </span>
+<div
+  class="noteblock"
+  on:click={onClick}
+  on:mouseover={onClick}
+  on:mouseout={stopAssignment}
+>
+  <span> {note} </span>
 </div>
 
 <style>
-    div {
-        display: inline-block;
-        padding: 1em;
-        margin: .2em;
-        border-radius: .2em; 
-        border-style: solid;
-        border-color: black;
-    }
+  div {
+    display: inline-block;
+    padding: 1em;
+    margin: 0.2em;
+    border-radius: 0.2em;
+    border-style: solid;
+    border-color: black;
+  }
 </style>
