@@ -8,11 +8,15 @@ import { assigningNote, currentNote } from "../stores";
 
     const onClick = () => {
         currentNote.set(note)
-        assigningNote.set(true);
+        assigningNote.set(true)
+    }
+
+    const stopAssignment = () => {
+        assigningNote.set(false)
     }
 </script>
 
-<div class='noteblock' on:click={onClick}>
+<div class='noteblock' on:click={onClick} on:mouseover={onClick} on:mouseout{stopAssignment}>
     <span> {note} </span>
 </div>
 

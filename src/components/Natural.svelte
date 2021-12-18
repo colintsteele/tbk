@@ -4,7 +4,7 @@
 import { get } from "svelte/store";
 
 import type Key from "../key"
-import { currentNote, assigningNote } from "../stores";
+import { currentNote, assigningNote, currentOctave, playingKey } from "../stores";
 
     let keyDown: boolean = false
     let assignedKey: string = null;
@@ -12,9 +12,10 @@ import { currentNote, assigningNote } from "../stores";
     export let key: Key
     
     export function pressKey() {
-        let shouldAssign = get(assigningNote);
+        let shouldAssign = get(assigningNote)
         if (shouldAssign == true) {
-            key.note = assignedKey; 
+            key.note = assignedKey 
+            key.octave = get(currentOctave)
             assigningNote.set(false)
         } else {
             key.play() 
@@ -31,15 +32,20 @@ import { currentNote, assigningNote } from "../stores";
         keyDown = false
     }
 
+    playingKey.subscribe(k => {
+        if(key.key == k) {
+            pressKey()
+        }
+    })
+
     currentNote.subscribe(value => {
         assignedKey = value
     })
 </script>
 
 <div class='natural' class:pressed="{keyDown === true}" on:click={onClick}>
-    <span> {key.note} </span>     
-    <!-- <span> {key.octave} </span> -->
-    <span> {key.key} </span>
+    <span> {key.note} {key.octave} </span>     
+    <span class='switch'> {key.key} </span>
 </div>
 
 <style>
@@ -48,9 +54,20 @@ import { currentNote, assigningNote } from "../stores";
         font-size: small;
     }
 
+    .switch {
+        padding: 0.1em;
+        width: 1em;
+        height: 1em;
+        margin-top: 1em;
+        margin-left: 1.3em;
+        border-width: 0.1em;
+        border-style: solid;
+        border-radius: 0.2em;
+        font-family: monospace;
+    }
     .natural {
-        height: 3em;
-        width: 2em;
+        height: 6em;
+        width: 3em;
         display: inline-block;
         margin: .5px;
         border-style: solid;
@@ -63,6 +80,6 @@ import { currentNote, assigningNote } from "../stores";
 
     .pressed { 
         border-bottom-width: 0.2em;
-        height: 3.4em;
+        height: 6.4em;
     }
 </style>

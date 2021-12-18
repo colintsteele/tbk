@@ -2,34 +2,42 @@
 import Natural from "./components/Natural.svelte"
 import Note from "./components/Note.svelte"
 import type Key from "./key"
-import type KeyHandler from "./keyHandler"
-import { currentNote, assigningNote } from "./stores";
+import { currentOctave, playingKey } from "./stores"
 
-	export let keyHandler: KeyHandler
 	export let keys: Array<Key>
 	let notes = keys.map( key => key[1].note )
-	let noteComponents = {};	
-	let nNaturals = {};
+	let noteComponents = {};
+	let selectedOctave: number = 3;
 
 	function handleKeydown(e: KeyboardEvent) {
-		let key = nNaturals[e.key]
-		key && key.pressKey()
+		playingKey.set(e.key)
+	}
+
+	function setOctave() {
+		currentOctave.set(selectedOctave);
 	}
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
-<!-- a: 97 s:115 d:100 -->
 
 <main>
 	<p> 🎶🎶🎶 </p>
 	<div id="piano">
 		{#each keys as key }
-			<Natural key={ key[1] } bind:this={nNaturals[key[1].key]}/>
+			<Natural key={ key[1] }/>
 		{/each}
 	</div>
 
 	<div id="noteSelector">
-		{#each notes as note }
+		<select bind:value={selectedOctave} on:change="{setOctave}">
+			{#each [...Array(8).keys()] as octave} 
+				<option value={octave}>
+					{octave}
+				</option>
+			{/each}
+		</select>
+
+		{ #each notes as note}
 			<Note note={ note } bind:this={noteComponents[note]}/>
 		{/each}
 	</div>
