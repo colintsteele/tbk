@@ -1,18 +1,18 @@
+<svelte:options accessors={true}/>
+
 <script module="module" lang="ts">
 import type Key from "../key"
     let keyDown = false
 
     export let key: Key
-    export function pressKey(kkey) {
-        if(kkey == 'click' || kkey.key == key.key){
-            key.play() 
-            keyDown = true
-            setTimeout(keyUp, 100)
-        }
+    export function pressKey() {
+        key.play() 
+        keyDown = true
+        setTimeout(keyUp, 100)
     }
 
     const onClick = () => {
-        pressKey('click')
+        pressKey()
     }
 
     const keyUp = () => {

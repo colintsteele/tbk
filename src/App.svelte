@@ -6,6 +6,8 @@ import type KeyHandler from "./keyHandler"
 	export let keyHandler: KeyHandler
 	export let keys: Array<Key>
 
+	let naturals = [];
+
 	let keyPressed = null
 	$: lastKey = keyPressed
 
@@ -15,10 +17,9 @@ import type KeyHandler from "./keyHandler"
 	function handleKeydown(e: KeyboardEvent) {
 		keyPressed
 
-		keys.map((key) => {
-			console.log('m')
-			if(key[0] === e.key){
-				key[1].play()
+		naturals.map((natural) => {
+			if(natural.key.key === e.key){
+				natural.pressKey()
 			}
 		})
 	}
@@ -35,8 +36,8 @@ import type KeyHandler from "./keyHandler"
 
 	<h6> ☣️ </h6>
 	
-	{#each keys as key }
-	  <Natural key={ key[1] }/>
+	{#each keys as key, i }
+	  <Natural key={ key[1] } bind:this={naturals[i]}/>
 	{/each}
 
 </main>
