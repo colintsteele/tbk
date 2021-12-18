@@ -8,15 +8,7 @@ import type KeyHandler from "./keyHandler"
 
 	let naturals = [];
 
-	let keyPressed = null
-	$: lastKey = keyPressed
-
-	let notePlayed = null
-	$: lastNote = notePlayed
-
 	function handleKeydown(e: KeyboardEvent) {
-		keyPressed
-
 		naturals.map((natural) => {
 			if(natural.key.key === e.key){
 				natural.pressKey()
@@ -30,16 +22,9 @@ import type KeyHandler from "./keyHandler"
 
 <main>
 	<p> 🎶🎶🎶 </p>
-	<h4> Press keys 1 through = and q through ] to play music </h4>
-	<h4>Key Pressed: <span>{lastKey}</span> </h4>
-	<h4>Not Produced: <span>{lastNote}</span> </h4>
-
-	<h6> ☣️ </h6>
-	
 	{#each keys as key, i }
 	  <Natural key={ key[1] } bind:this={naturals[i]}/>
 	{/each}
-
 </main>
 
 <style>
