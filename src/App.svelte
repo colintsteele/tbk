@@ -1,29 +1,29 @@
 <script lang="ts">
+  //components
   import Natural from "./components/Natural.svelte";
   import Note from "./components/Note.svelte";
+  import MusicInfo from "./components/MusicInfo.svelte";
   import type Key from "./key";
-  import { currentOctave, playingKey, stoppingKey } from "./stores";
+  import { currentOctave, playingKey } from "./stores";
+  import { majorScale } from "./frequencyMap";
 
   export let keys: Array<Key>;
   let notes = keys.map((key) => key.note);
   let selectedOctave: number = 3;
 
   function handleKeydown(e: KeyboardEvent) {
+    playingKey.set(null)
     playingKey.set(e.key);
-  }
-
-  function handleKeyup(e: KeyboardEvent) {
-    stoppingKey.set(e.key);
   }
 
   function setOctave() {
     currentOctave.set(selectedOctave);
   }
 
-  $: randomNote = Math.floor(Math.random() * 12);
+  var randomNote = notes[Math.floor(Math.random()*notes.length)];
 </script>
 
-<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
+<svelte:window on:keydown={handleKeydown} />
 
 <main>
   <p>🎶🎶🎶</p>
@@ -42,9 +42,13 @@
       {/each}
     </select>
 
-    {#each notes as note, i}
-      <Note {note} highlighted={i == randomNote} />
+    {#each notes as note}
+      <Note {note} highlighted={note == randomNote} />
     {/each}
+
+    <div>
+      <MusicInfo scale={majorScale(randomNote, 3)}/>
+    </div>
   </div>
 </main>
 

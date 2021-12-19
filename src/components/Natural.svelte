@@ -2,7 +2,6 @@
 
 <script module="module" lang="ts">
   import { get } from "svelte/store";
-
   import type Key from "../key";
   import {
     currentNote,
@@ -14,7 +13,6 @@
 
   let keyDown: boolean = false;
   let assignedKey: string = null;
-
   export let key: Key;
 
   export function pressKey() {
@@ -41,12 +39,6 @@
   playingKey.subscribe((k) => {
     if (key.key == k) {
       pressKey();
-    }
-  });
-
-  stoppingKey.subscribe((k) => {
-    if (key.key == k) {
-      key.stop();
     }
   });
 

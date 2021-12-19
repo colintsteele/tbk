@@ -2,8 +2,7 @@ import App from './App.svelte';
 import Key from './key';
 import KeyHandler from './keyHandler';
 import SoundMachine from './soundMachine';
-let context = new AudioContext;
-let soundMachine = new SoundMachine(context)
+let soundMachine = new SoundMachine
 let keyMap = {
 	'C': ['q', '1'],
 	'C#': ['w', '2'],
@@ -22,7 +21,7 @@ let keys: Array<Key> = [];
 
 for (var key in keyMap) {
 	var num_row = keyMap[key][1]
-	keys.push(new Key(soundMachine, key, 3, num_row))
+	keys.push(new Key(key, 3, num_row))
 }
 
 const app = new App({

@@ -1,13 +1,9 @@
 import { set_input_type } from "svelte/internal";
 
 export default class SoundMachine {
-  private context: AudioContext;
   private frequency: number;
-  private oscillator: OscillatorNode;
-  private gain: GainNode;
 
-  constructor(context: AudioContext) {
-    this.context = context;
+  constructor() {
   }
 
   setFrequency(frequency: number) {
@@ -15,22 +11,22 @@ export default class SoundMachine {
   }
 
   start(when: number) {
-    this.oscillator = this.context.createOscillator();
-    this.gain = this.context.createGain();
+    let context = new AudioContext
+    let oscillator = context.createOscillator();
+    let gain = context.createGain();
 
-    this.oscillator.frequency.value = this.frequency;
-    this.oscillator.connect(this.gain);
-    this.oscillator.type = "sine";
+    oscillator.frequency.value = this.frequency;
+    oscillator.connect(gain);
+    oscillator.type = "triangle";
 
-    this.gain.connect(this.context.destination);
+    gain.connect(context.destination);
 
-    this.oscillator.start(when);
-  }
+    oscillator.start(when);
 
-  stop(when: number) {
-    this.gain.gain.exponentialRampToValueAtTime(
+    gain.gain.exponentialRampToValueAtTime(
       0.00001,
-      this.context.currentTime + 1
+      context.currentTime + 1
     );
   }
+
 }
