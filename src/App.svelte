@@ -19,6 +19,8 @@
   function setOctave() {
     currentOctave.set(selectedOctave);
   }
+
+  $: randomNote = Math.floor(Math.random() * 12);
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
@@ -40,8 +42,8 @@
       {/each}
     </select>
 
-    {#each notes as note}
-      <Note {note} />
+    {#each notes as note, i}
+      <Note {note} highlighted={i == randomNote} />
     {/each}
   </div>
 </main>
@@ -57,11 +59,6 @@
 
   #noteSelector {
     margin-top: 2em;
-  }
-  h4 {
-    color: #ff3e00;
-    font-size: 2em;
-    font-weight: 100;
   }
 
   span {

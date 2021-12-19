@@ -3,6 +3,7 @@
 <script module="module" lang="ts">
   import { assigningNote, currentNote } from "../stores";
 
+  export let highlighted: boolean = false;
   export let note: string;
 
   const onClick = () => {
@@ -17,6 +18,7 @@
 
 <div
   class="noteblock"
+  class:highlighted
   on:click={onClick}
   on:mouseover={onClick}
   on:mouseout={stopAssignment}
@@ -25,6 +27,9 @@
 </div>
 
 <style>
+  .highlighted {
+    background-color: #c0ffee;
+  }
   div {
     display: inline-block;
     padding: 1em;
