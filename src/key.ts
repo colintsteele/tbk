@@ -16,7 +16,10 @@ export default class Key {
     play() {
         this.soundMachine.setFrequency(FrequencyMap[this.note][this.octave]);
         this.soundMachine.start(0)
-        return this.note;
+    }
+
+    stop() {
+        this.soundMachine.stop(0)
     }
 }
 

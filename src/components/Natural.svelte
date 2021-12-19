@@ -9,6 +9,7 @@
     assigningNote,
     currentOctave,
     playingKey,
+    stoppingKey,
   } from "../stores";
 
   let keyDown: boolean = false;
@@ -40,6 +41,12 @@
   playingKey.subscribe((k) => {
     if (key.key == k) {
       pressKey();
+    }
+  });
+
+  stoppingKey.subscribe((k) => {
+    if (key.key == k) {
+      key.stop();
     }
   });
 

@@ -22,18 +22,13 @@ let keys: Array<Key> = [];
 
 for (var key in keyMap) {
 	var num_row = keyMap[key][1]
-	var letter_row = keyMap[key][0];
-
 	keys.push(new Key(soundMachine, key, 3, num_row))
 }
-
-let keyHandler = new KeyHandler(keys);
 
 const app = new App({
 	target: document.body,
 	props: {
-		keyHandler: keyHandler,
-		keys: Object.entries(keys).slice(0, 12)
+		keys: keys.slice(0, 12)
 	}
 });
 
